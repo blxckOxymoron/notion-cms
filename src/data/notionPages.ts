@@ -1,6 +1,6 @@
+import "server-only";
 import { Client, isFullPage } from "@notionhq/client";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import "server-only";
 
 const notion = new Client({
   auth: process.env.NOTION_API_KEY,

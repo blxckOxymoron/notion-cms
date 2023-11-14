@@ -1,8 +1,8 @@
-import { debugGetAllData } from "@/data/twitchUser";
+import { getUserInfo } from "@/data/twitchAPI";
 import LinkToNextPage from "./LinkToNextPage";
 
 export default async function TwitchAuth() {
-  const data = debugGetAllData();
+  const data = await getUserInfo();
 
   return (
     <main className="flex flex-col p-12 gap-12">
