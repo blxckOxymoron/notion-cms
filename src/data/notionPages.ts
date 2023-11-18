@@ -7,11 +7,11 @@ const notion = new Client({
 });
 
 export async function getNotionPages() {
-  // TODO simpler env check
   if (!process.env.NOTION_DATABASE_ID) throw new Error("Missing NOTION_DATABASE_ID");
 
   const { has_more, next_cursor, results } = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID,
+    page_size: 24,
   });
 
   const pages = results.filter(
