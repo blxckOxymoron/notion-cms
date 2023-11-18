@@ -9,7 +9,9 @@ const fetchTwitchWithAuth = async (route: string, init?: RequestInit | undefined
 
   const url = new URL(route, "https://api.twitch.tv/helix/");
 
-  const tokenData = getTokenData();
+  const tokenData = await getTokenData();
+  if (!tokenData) redirect(Routes.auth.login);
+
   const result = await fetch(url, {
     ...init,
     headers: {
@@ -61,7 +63,7 @@ export async function updateTokenFromCode(code: string): Promise<TwitchTokenResp
 
   const respJson = await tokenResponse.json();
 
-  setTokenData(respJson);
+  await setTokenData(respJson);
 
   return respJson;
 }
@@ -89,7 +91,7 @@ export async function updateTokenFromRefreshToken(tokenData: TwitchTokenResponse
 
   // save new token
   const newTokenData: TwitchTokenResponse = await refreshedResult.json();
-  setTokenData(newTokenData);
+  await setTokenData(newTokenData);
 }
 
 export type TwitchUserInfoResponse = {

@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(redirectURL);
   }
 
-  const tokenResponse = await updateTokenFromCode(paramCode);
+  await updateTokenFromCode(paramCode);
 
   return NextResponse.redirect(redirectURL);
 }
