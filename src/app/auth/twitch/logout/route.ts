@@ -1,8 +1,8 @@
 import { Routes } from "@/data/routes";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
 
-export function GET(request: NextRequest) {
-  request.cookies.delete("token");
-  redirect(Routes.auth.login);
+export function GET() {
+  cookies().delete("token");
+  redirect(Routes.auth.login + "?logout=true");
 }

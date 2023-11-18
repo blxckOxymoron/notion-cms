@@ -11,7 +11,6 @@ export async function getTokenData(): Promise<TokenData | undefined> {
   if (!cookieToken) return;
 
   const tokenData: TokenData = JSON.parse(await decrypt(cookieToken));
-  console.log("getTokenData", tokenData);
 
   return tokenData;
 }
@@ -21,8 +20,6 @@ export async function setTokenData(data: TwitchTokenResponse) {
     ...data,
     updated_at: Date.now(),
   };
-
-  console.log("setTokenData", tokenData);
 
   cookies().set("token", await encrypt(JSON.stringify(tokenData)), {
     httpOnly: true,

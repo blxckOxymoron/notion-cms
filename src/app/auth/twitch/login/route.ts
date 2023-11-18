@@ -1,5 +1,7 @@
+import { Routes } from "@/data/routes";
 import { updateTokenFromRefreshToken } from "@/data/twitchAPI";
 import { getTokenData } from "@/data/user";
+import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 function createState(request: NextRequest) {
@@ -14,11 +16,12 @@ export async function GET(request: NextRequest) {
   if (!process.env.TWITCH_CLIENT_ID) throw new Error("Missing TWITCH_CLIENT_ID");
 
   const state = createState(request);
+  const logout = request.nextUrl.searchParams.get("logout") === "true";
 
   const tokenData = await getTokenData();
-  if (tokenData) {
+  if (!logout && tokenData) {
     await updateTokenFromRefreshToken(tokenData);
-    return NextResponse.redirect(new URL(state.to ?? "/", request.nextUrl.origin));
+    redirect(Routes.auth.info + (state.to ? `?to=${state.to}` : ""));
   }
 
   const twitchLoginUrl = new URL("https://id.twitch.tv/oauth2/authorize");
@@ -27,6 +30,7 @@ export async function GET(request: NextRequest) {
   twitchLoginUrl.searchParams.set("redirect_uri", "http://localhost:3000/auth/twitch/callback");
   twitchLoginUrl.searchParams.set("response_type", "code");
   twitchLoginUrl.searchParams.set("scope", "user:read:subscriptions");
+  if (logout) twitchLoginUrl.searchParams.set("force_verify", "true");
 
   twitchLoginUrl.searchParams.set(
     "state",

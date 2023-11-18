@@ -1,4 +1,4 @@
-import { getIsSubscribed, getUserInfo } from "@/data/twitchAPI";
+import { getIsSubscribed, getAuthUserInfo } from "@/data/twitchAPI";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { Routes } from "./data/routes";
@@ -11,14 +11,14 @@ export const config = {
 export async function middleware(request: NextRequest) {
   try {
     // require user to be logged in
-    const user = await getUserInfo();
+    const user = await getAuthUserInfo();
 
     // require user to be a subscriber
     if (!process.env.TWITCH_CHANNEL_ID) throw new Error("Missing TWITCH_CHANNEL_ID");
 
     const subscribed = await getIsSubscribed(process.env.TWITCH_CHANNEL_ID, user.id);
 
-    if (!subscribed) redirect(Routes.auth.info);
+    if (!subscribed) redirect(Routes.auth.info + "?to=" + request.nextUrl.pathname);
 
     return NextResponse.next();
   } catch (e) {
