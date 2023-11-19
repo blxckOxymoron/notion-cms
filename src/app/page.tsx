@@ -1,20 +1,10 @@
-import { getNotionPages } from "@/data/notionPages";
+import { getBroadcasterInfo } from "@/data/broadcaster";
 
 export default async function Home() {
-  const pages = await getNotionPages();
-
+  const { display_name } = await getBroadcasterInfo();
   return (
     <main className="flex min-h-screen flex-col p-12 gap-12">
-      {pages.results.map(({ id, properties, created_time }) => (
-        <div key={id}>
-          <pre>created: {created_time}</pre>
-          {Object.entries(properties).map(([name, property]) => (
-            <pre key={property.id}>
-              {name}: {JSON.stringify(property[property.type as keyof typeof property])}
-            </pre>
-          ))}
-        </div>
-      ))}
+      <h1>Welcome to the homepage for {display_name}</h1>
     </main>
   );
 }

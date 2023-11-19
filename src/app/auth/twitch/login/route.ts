@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 function createState(request: NextRequest) {
+  let to = request.nextUrl.searchParams.get("to");
+  if (to && ["null", "undefined", Routes.auth.logout, Routes.auth.login].includes(to)) to = null;
   return {
     to: request.nextUrl.searchParams.get("to"),
   };

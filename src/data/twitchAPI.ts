@@ -10,6 +10,8 @@ const fetchTwitchWithAuth = async (route: string, init?: RequestInit | undefined
 
   const url = new URL(route, "https://api.twitch.tv/helix/");
 
+  // TODO next-url is not a good or reliable way to get the current url
+
   const tokenData = await getTokenData();
   if (!tokenData) redirect(Routes.auth.login + `?to=${headers().get("next-url")}`);
 
@@ -24,7 +26,7 @@ const fetchTwitchWithAuth = async (route: string, init?: RequestInit | undefined
 
   if (result.status === 401) {
     console.error("not authorized", tokenData);
-    redirect(Routes.auth.login + `?to=${headers().get("next-url")}`);
+    redirect(Routes.auth.refresh + `?to=${headers().get("next-url")}`);
   }
 
   return result;
@@ -172,10 +174,7 @@ export type TwitchIsSubscribedResponse = TwitchIsSubscribedBaseResponse & {
 
 const overrideUserIds: string[] = ["496325874"];
 
-export async function getIsSubscribed(
-  broadcaster_id: string,
-  user_id: string
-): Promise<TwitchIsSubscribedResponse | boolean> {
+export async function getIsSubscribed(broadcaster_id: string, user_id: string): Promise<boolean> {
   if (broadcaster_id === user_id || overrideUserIds.includes(user_id)) return true;
 
   const response = await fetchTwitchWithAuth(
@@ -185,6 +184,8 @@ export async function getIsSubscribed(
         user_id,
       })
   );
-  if (response.status === 404) return false;
-  else return (await response.json()).data[0] as TwitchIsSubscribedResponse;
+
+  return response.ok;
+  // if (response.status === 404) return false;
+  // else return (await response.json()).data[0] as TwitchIsSubscribedResponse;
 }
