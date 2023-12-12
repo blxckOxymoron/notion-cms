@@ -22,7 +22,7 @@ async function getKey(salt: Pbkdf2Params["salt"], usage: KeyUsage[]) {
     {
       name: "PBKDF2",
       salt,
-      iterations: 250_000,
+      iterations: 50_000,
       hash: "SHA-256",
     },
     passwordKey,
