@@ -172,7 +172,7 @@ export type TwitchIsSubscribedResponse = TwitchIsSubscribedBaseResponse & {
   gifter_name: string;
 };
 
-const overrideUserIds: string[] = ["496325874"];
+const overrideUserIds: string[] = process.env.USER_OVERRIDE_IDS?.split(",") ?? [];
 
 export async function getIsSubscribed(broadcaster_id: string, user_id: string): Promise<boolean> {
   if (broadcaster_id === user_id || overrideUserIds.includes(user_id)) return true;
