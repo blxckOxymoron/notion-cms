@@ -5,12 +5,14 @@ import { useSearchParams } from "next/navigation";
 
 export default function LinkToNextPage() {
   const to = useSearchParams().get("to");
+  const actualTo = to === "null" ? null : to;
+
   return (
     <Link
-      href={to ?? "/sub/vods"}
+      href={actualTo ?? "/sub/vods"}
       className="hover:text-blue-500 px-3 py-1 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors"
     >
-      {to ? "continue" : "view vods"}
+      {actualTo ? "continue" : "view vods"}
     </Link>
   );
 }
