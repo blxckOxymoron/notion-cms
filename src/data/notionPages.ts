@@ -24,3 +24,13 @@ export async function getNotionPages() {
     results: pages,
   };
 }
+
+export async function getNotionPage(id: string) {
+  if (!process.env.NOTION_DATABASE_ID) throw new Error("Missing NOTION_DATABASE_ID");
+
+  const page = await notion.pages.retrieve({
+    page_id: id,
+  });
+
+  return isFullPage(page) ? page : null;
+}

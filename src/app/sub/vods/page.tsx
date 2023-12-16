@@ -32,8 +32,7 @@ export default async function VODPage() {
             return (
               <VODWindow
                 key={page.id}
-                embedURL={props.url.url}
-                tags={[]}
+                id={page.id}
                 thumbnailUrl={props.thumbnail_url.url}
                 title={props.name.title.reduce((a: string, e: any) => a + e.plain_text, "")}
               />
