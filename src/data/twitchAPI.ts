@@ -1,4 +1,5 @@
-import "server-only";
+"use server";
+
 import { redirect } from "next/navigation";
 import { getTokenData, setTokenData } from "./user";
 import { Routes } from "./routes";

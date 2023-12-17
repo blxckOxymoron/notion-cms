@@ -1,8 +1,7 @@
 import { getNotionPages } from "@/data/notionPages";
-import LoadMoreButton from "./LoadMoreButton";
-import VODWindow from "./VODWindow";
 import searchIcon from "./search.svg";
 import Image from "next/image";
+import PageVideos from "./PageVideos";
 
 export default async function VODPage() {
   const pages = await getNotionPages();
@@ -26,20 +25,7 @@ export default async function VODPage() {
       </header>
       <main className="flex flex-col gap-4 items max-w-[1700px] ">
         <h1 className="text-7xl">WELCOME TO THE VODS</h1>
-        <div className="flex flex-wrap justify-center gap-4">
-          {pages.results.map(page => {
-            const props: any = page.properties;
-            return (
-              <VODWindow
-                key={page.id}
-                id={page.id}
-                thumbnailUrl={props.thumbnail_url.url}
-                title={props.name.title.reduce((a: string, e: any) => a + e.plain_text, "")}
-              />
-            );
-          })}
-        </div>
-        {pages.has_more && pages.next_cursor && <LoadMoreButton nextCursor={pages.next_cursor} />}
+        <PageVideos initialPages={pages} />
       </main>
     </div>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { IframeHTMLAttributes, MouseEventHandler, useEffect, useRef, useState } from "react";
 
 /* eslint-disable @next/next/no-img-element */
 export default function VODWindow({
@@ -13,8 +12,6 @@ export default function VODWindow({
   thumbnailUrl: string;
   title: string;
 }) {
-  const outermostElement = useRef<HTMLDivElement>(null);
-
   return (
     <>
       <Link href={`/sub/vods/video/${id}`}>

@@ -1,3 +1,5 @@
+"use server";
+
 import { getUserInfo } from "./twitchAPI";
 
 export async function getBroadcasterInfo() {

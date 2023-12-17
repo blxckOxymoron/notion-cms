@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { decrypt, encrypt } from "@/lib/crypto";
 import { TwitchTokenResponse } from "./twitchAPI";
