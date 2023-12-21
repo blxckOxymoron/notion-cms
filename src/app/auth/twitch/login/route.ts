@@ -18,10 +18,10 @@ export async function GET(request: NextRequest) {
   if (!process.env.TWITCH_CLIENT_ID) throw new Error("Missing TWITCH_CLIENT_ID");
 
   const state = createState(request);
-  const logout = request.nextUrl.searchParams.get("logout") === "true";
+  const confirm = request.nextUrl.searchParams.get("confirm") === "true";
 
   const tokenData = await getTokenData();
-  if (!logout && tokenData) {
+  if (!confirm && tokenData) {
     await updateTokenFromRefreshToken(tokenData);
     redirect(Routes.auth.info + (state.to ? `?to=${state.to}` : ""));
   }
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
   );
   twitchLoginUrl.searchParams.set("response_type", "code");
   twitchLoginUrl.searchParams.set("scope", "user:read:subscriptions");
-  if (logout) twitchLoginUrl.searchParams.set("force_verify", "true");
+  if (confirm) twitchLoginUrl.searchParams.set("force_verify", "true");
 
   twitchLoginUrl.searchParams.set(
     "state",

@@ -1,4 +1,4 @@
-import VideoEmbed from "@/app/components/VideoEmbed";
+import VideoEmbed from "@/components/VideoEmbed";
 import { getNotionPage } from "@/data/notionPages";
 import extractEmbedURLs from "@/lib/extractEmbedURLs";
 import Link from "next/link";

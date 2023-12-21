@@ -1,5 +1,5 @@
-import VideoEmbed from "@/app/components/VideoEmbed";
-import Modal from "@/app/components/Modal";
+import VideoEmbed from "@/components/VideoEmbed";
+import Modal from "@/components/Modal";
 import { getNotionPage } from "@/data/notionPages";
 import { notFound } from "next/navigation";
 import extractEmbedURLs from "@/lib/extractEmbedURLs";
