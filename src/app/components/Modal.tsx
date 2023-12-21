@@ -13,8 +13,6 @@ export default function Modal({ children }: { children: React.ReactNode }) {
     [router]
   );
 
-  console.log(document.body.scrollHeight);
-
   useEffect(() => {
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", escapeHandler);
