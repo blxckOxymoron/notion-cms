@@ -30,7 +30,7 @@ export default async function VODVideoPage({
       />
       <div className="flex gap-2">
         <Link href="/sub/vods/all" className="hover:underline">
-          &larr; All VODs
+          &larr; Alle VODs
         </Link>
       </div>
     </div>

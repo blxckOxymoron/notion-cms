@@ -24,7 +24,7 @@ export default async function VODPage() {
         </form>
       </header>
       <main className="flex flex-col gap-4 items max-w-[1700px] ">
-        <h1 className="text-7xl">WELCOME TO THE VODS</h1>
+        <h1 className="text-7xl">Willkommen zu den VODs</h1>
         <PageVideos initialPages={pages} />
       </main>
     </div>

@@ -18,7 +18,7 @@ export default async function TwitchAuth({
 
   return (
     <main className="flex p-12 h-screen items-center justify-center">
-      <div className="p-6 rounded-lg border border-white flex flex-col items-center gap-3 max-w-sm">
+      <div className="p-6 rounded-lg border border-white flex flex-col items-center gap-3 max-w-md">
         <h1 className="text-xl text-center font-bold">
           Logged in as <br />
           <Image
@@ -34,18 +34,18 @@ export default async function TwitchAuth({
         {isSubscribed ? (
           <>
             <p className="text-lg">
-              <span className="scale-125 inline-block">✅</span> You are subscribed to{" "}
+              <span className="scale-125 inline-block">✅</span> Du bist Subscriber bei{" "}
               {broadcaster_display_name}
             </p>
-            <p className="text-center">You can now access the subscriber-only content</p>
+            <p className="text-center">Du kannst dir jetzt die extra Inhalte anschauen</p>
           </>
         ) : (
           <>
             <p className="text-center">
-              <span className="scale-125 inline-block">❌</span> You are not subscribed to{" "}
+              <span className="scale-125 inline-block">❌</span> Du bist kein Subscriber von{" "}
               {broadcaster_display_name}
             </p>
-            <p className="text-center">Unfortunately this page is subscriber-only</p>
+            <p className="text-center">Diese Seite ist nur für Subscriber zugänglich</p>
           </>
         )}
         <div className="flex gap-2">
@@ -54,7 +54,7 @@ export default async function TwitchAuth({
             href="/auth/twitch/logout"
             className="border rounded-md px-3 py-1 hover:border-zinc-300 hover:text-zinc-300 transition-colors"
           >
-            logout
+            abmelden
           </Link>
         </div>
       </div>
