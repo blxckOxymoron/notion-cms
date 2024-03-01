@@ -1,6 +1,7 @@
 import { Routes } from "@/data/routes";
 import searchIcon from "./search.svg";
 import homeIcon from "./home.svg";
+import twitchIcon from "./twitch.svg";
 import Image from "next/image";
 
 export default function VODLayout({ children }: { children: React.ReactNode }) {
@@ -25,6 +26,12 @@ export default function VODLayout({ children }: { children: React.ReactNode }) {
             placeholder="Suche ..."
           />
         </form>
+        <a
+          href={Routes.auth.info}
+          className="p-2 leading-snug rounded-full border border-white hover:bg-zinc-600 transition-colors"
+        >
+          <Image src={twitchIcon} alt="Twitch Icon" />
+        </a>
       </header>
       {children}
     </div>

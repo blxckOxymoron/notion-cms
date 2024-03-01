@@ -160,13 +160,15 @@ export type TwitchIsSubscribedResponse = TwitchIsSubscribedBaseResponse & {
 
 const overrideUserIds: string[] = process.env.USER_OVERRIDE_IDS?.split(",") ?? [];
 
-export async function getIsSubscribed(broadcaster_id: string, user_id: string): Promise<boolean> {
-  if (broadcaster_id === user_id || overrideUserIds.includes(user_id)) return true;
+export async function getIsSubscribed(user_id: string): Promise<boolean> {
+  if (!process.env.TWITCH_CHANNEL_ID) throw new Error("Missing TWITCH_CHANNEL_ID");
+
+  if (process.env.TWITCH_CHANNEL_ID === user_id || overrideUserIds.includes(user_id)) return true;
 
   const response = await fetchTwitchWithAuth(
     "subscriptions/user?" +
       new URLSearchParams({
-        broadcaster_id,
+        broadcaster_id: process.env.TWITCH_CHANNEL_ID,
         user_id,
       })
   );
