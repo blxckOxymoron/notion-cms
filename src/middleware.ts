@@ -18,16 +18,18 @@ export async function middleware(request: NextRequest) {
 
     const subscribed = await getIsSubscribed(user.id);
 
-    if (!subscribed) redirect(Routes.auth.info + "?to=" + request.nextUrl.pathname);
+    if (!subscribed) redirect(Routes.auth.info);
 
     return NextResponse.next();
   } catch (e) {
     // handle redirect manually because next doesn't do it automatically
     if (!isRedirectError(e)) throw e;
 
-    const url = new URL(getURLFromRedirectError(e), request.url);
+    const redirectURL = new URL(getURLFromRedirectError(e), request.url);
 
-    return NextResponse.redirect(url, {
+    redirectURL.searchParams.set("to", request.nextUrl.pathname + request.nextUrl.search);
+
+    return NextResponse.redirect(redirectURL, {
       headers: {
         "Set-Cookie": e.mutableCookies.toString(),
       },
