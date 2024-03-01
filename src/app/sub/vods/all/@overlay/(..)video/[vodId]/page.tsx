@@ -22,6 +22,7 @@ export default async function VODVideoPage({
     <Modal>
       <VideoEmbed
         urls={urls}
+        id={params.vodId}
         hosting={searchParams.hosting}
         title={properties.name.title.reduce(
           (txt: string, { plain_text }: { plain_text: string }) => txt + plain_text,

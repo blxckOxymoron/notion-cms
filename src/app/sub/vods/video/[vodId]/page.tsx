@@ -19,8 +19,9 @@ export default async function VODVideoPage({
   const urls = extractEmbedURLs(page.properties);
 
   return (
-    <div className="flex flex-col items-center my-4 gap-4">
+    <div className="flex flex-col items-center my-4 gap-4 max-w-full">
       <VideoEmbed
+        id={params.vodId}
         urls={urls}
         hosting={searchParams.hosting}
         title={properties.name.title.reduce(

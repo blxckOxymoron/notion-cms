@@ -1,4 +1,7 @@
+"use client";
+
 import extractEmbedURLs from "@/lib/extractEmbedURLs";
+import { DiscussionEmbed } from "disqus-react";
 import Link from "next/link";
 import type { IframeHTMLAttributes } from "react";
 
@@ -13,24 +16,21 @@ type URLs = ReturnType<typeof extractEmbedURLs>;
 export default function VideoEmbed({
   urls,
   title,
+  id,
   hosting = urls[0]?.name,
 }: {
   urls: URLs;
   title: string;
+  id: string;
   hosting?: string;
 }) {
-  const embedWidth = typeof window !== "undefined" ? Math.min(1280, window.innerWidth - 64) : 1080;
-  const embedHeight = Math.min(720, (embedWidth * 9) / 16);
+  if (!process.env.NEXT_PUBLIC_DISQUS_SHORTNAME) {
+    throw "Missing DISQUS_SHORTNAME env variable";
+  }
 
   return (
-    <div className="flex flex-col gap-2" style={{ width: embedWidth }}>
+    <div className="flex flex-col gap-2 max-w-screen-xl">
       <h2 className="text-4xl font-bold p-4 bg-black rounded-lg">{title}</h2>
-      <iframe
-        width={embedWidth}
-        height={embedHeight}
-        src={urls.find(v => v.name === hosting)?.url}
-        {...allowProps}
-      ></iframe>
       <div className="flex gap-2 p-4 bg-black rounded-lg">
         <p>Hoster:</p>
         {urls
@@ -46,6 +46,23 @@ export default function VideoEmbed({
               {v.name}
             </Link>
           ))}
+      </div>
+      <div className="shrink-0" style={{ aspectRatio: `16/9` }}>
+        <iframe
+          width="1080"
+          height="607"
+          className="w-full h-full"
+          src={urls.find(v => v.name === hosting)?.url}
+          {...allowProps}
+        ></iframe>
+      </div>
+      <div className="bg-black rounded-lg p-4">
+        <DiscussionEmbed
+          shortname={process.env.NEXT_PUBLIC_DISQUS_SHORTNAME}
+          config={{
+            identifier: id,
+          }}
+        />
       </div>
     </div>
   );

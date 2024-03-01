@@ -31,7 +31,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="fixed top-0 left-0 backdrop-blur-md w-screen h-screen flex items-center justify-center overflow-hidden z-10"
+      className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-md w-screen h-screen flex justify-center overflow-auto z-10 p-4"
       ref={outermostElement}
       onClick={handleClick}
     >
