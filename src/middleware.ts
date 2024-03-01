@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
     // require user to be a subscriber
     if (!process.env.TWITCH_CHANNEL_ID) throw new Error("Missing TWITCH_CHANNEL_ID");
 
-    const subscribed = await getIsSubscribed(process.env.TWITCH_CHANNEL_ID, user.id);
+    const subscribed = await getIsSubscribed(user.id);
 
     if (!subscribed) redirect(Routes.auth.info + "?to=" + request.nextUrl.pathname);
 
