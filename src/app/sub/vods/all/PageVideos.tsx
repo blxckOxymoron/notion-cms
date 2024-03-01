@@ -16,24 +16,27 @@ export default function PageVideos({
 
   const [pages, setPages] = useState(initialPages);
 
-  const loadMore = useCallback(async (cursor: string | null) => {
-    if (fetching.current) return;
+  const loadMore = useCallback(
+    async (cursor: string | null) => {
+      if (fetching.current) return;
 
-    try {
-      fetching.current = true;
+      try {
+        fetching.current = true;
 
-      const data = await getNotionPages({
-        query,
-        start_cursor: cursor,
-      });
-      setPages(prev => ({
-        ...data,
-        results: [...prev.results, ...data.results],
-      }));
-    } finally {
-      fetching.current = false;
-    }
-  }, []);
+        const data = await getNotionPages({
+          query,
+          start_cursor: cursor,
+        });
+        setPages(prev => ({
+          ...data,
+          results: [...prev.results, ...data.results],
+        }));
+      } finally {
+        fetching.current = false;
+      }
+    },
+    [query]
+  );
 
   return (
     <>
