@@ -4,8 +4,8 @@ export default async function Layout(props: {
 }) {
   return (
     <>
-      {props.overlay}
       {props.children}
+      {props.overlay}
     </>
   );
 }

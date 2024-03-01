@@ -137,21 +137,6 @@ export type TwitchUserInfoResponse = {
   created_at: string;
 };
 
-export async function getUserInfo(user_id: string): Promise<TwitchUserInfoResponse> {
-  if (!process.env.TWITCH_CLIENT_ID) throw new Error("Missing TWITCH_CLIENT_ID");
-
-  const token = await getAppToken();
-  const response = await fetch(`https://api.twitch.tv/helix/users?id=${user_id}`, {
-    headers: {
-      Authorization: `Bearer ${token.access_token}`,
-      "Client-Id": process.env.TWITCH_CLIENT_ID,
-    },
-  });
-
-  const resJson = await response.json();
-  return resJson.data[0];
-}
-
 export async function getAuthUserInfo(): Promise<TwitchUserInfoResponse> {
   const response = await fetchTwitchWithAuth("users");
   const resJson = await response.json();

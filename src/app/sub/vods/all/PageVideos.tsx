@@ -6,11 +6,14 @@ import VODWindow from "./VODWindow";
 import { getNotionPages } from "@/data/notionPages";
 
 export default function PageVideos({
+  query,
   initialPages,
 }: {
+  query?: string;
   initialPages: Awaited<ReturnType<typeof getNotionPages>>;
 }) {
   const fetching = useRef(false);
+
   const [pages, setPages] = useState(initialPages);
 
   const loadMore = useCallback(async (cursor: string | null) => {
@@ -19,7 +22,10 @@ export default function PageVideos({
     try {
       fetching.current = true;
 
-      const data = await getNotionPages(cursor);
+      const data = await getNotionPages({
+        query,
+        start_cursor: cursor,
+      });
       setPages(prev => ({
         ...data,
         results: [...prev.results, ...data.results],

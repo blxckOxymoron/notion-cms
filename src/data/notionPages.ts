@@ -7,13 +7,27 @@ const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 });
 
-export async function getNotionPages(start_cursor: string | null = null) {
+export async function getNotionPages({
+  start_cursor,
+  query,
+}: {
+  start_cursor?: string | null;
+  query?: string;
+} = {}) {
   if (!process.env.NOTION_DATABASE_ID) throw new Error("Missing NOTION_DATABASE_ID");
 
   const { has_more, next_cursor, results } = await notion.databases.query({
     start_cursor: start_cursor ? start_cursor : undefined,
     database_id: process.env.NOTION_DATABASE_ID,
     page_size: 24,
+    filter: query
+      ? {
+          property: "name",
+          title: {
+            contains: query,
+          },
+        }
+      : undefined,
   });
 
   const pages = results.filter(

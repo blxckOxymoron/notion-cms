@@ -1,6 +1,6 @@
 import extractEmbedURLs from "@/lib/extractEmbedURLs";
 import Link from "next/link";
-import { IframeHTMLAttributes } from "react";
+import type { IframeHTMLAttributes } from "react";
 
 const allowProps: IframeHTMLAttributes<HTMLIFrameElement> = {
   allow:
@@ -33,11 +33,19 @@ export default function VideoEmbed({
       ></iframe>
       <div className="flex gap-2 p-4 bg-black rounded-lg">
         <p>Hoster:</p>
-        {urls.map(v => (
-          <Link href={`?hosting=${v.name}`} key={v.name} replace className="hover:underline">
-            {v.name}
-          </Link>
-        ))}
+        {urls
+          .filter(v => v.url)
+          .map(v => (
+            <Link
+              href={`?hosting=${v.name}`}
+              key={v.name}
+              replace
+              className="hover:underline aria-selected:underline"
+              aria-selected={v.name === hosting}
+            >
+              {v.name}
+            </Link>
+          ))}
       </div>
     </div>
   );
