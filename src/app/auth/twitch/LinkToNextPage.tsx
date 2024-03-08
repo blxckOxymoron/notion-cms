@@ -12,7 +12,7 @@ export default function LinkToNextPage() {
   return (
     <Link
       href={actualTo}
-      className="hover:text-blue-500 px-4 py-2 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors"
+      className="hover:text-red-600 px-4 py-2 bg-red-600 hover:bg-transparent border border-red-600 rounded-md transition-colors"
     >
       weiter
     </Link>

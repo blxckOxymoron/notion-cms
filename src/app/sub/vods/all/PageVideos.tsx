@@ -55,7 +55,7 @@ export default function PageVideos({
       </div>
       {pages.has_more && (
         <button
-          className="hover:text-blue-500 px-3 py-1 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors self-center"
+          className="hover:text-red-600 px-3 py-1 bg-red-600 hover:bg-transparent border border-red-600 rounded-md transition-colors self-center"
           onClick={() => loadMore(pages.next_cursor)}
         >
           mehr laden

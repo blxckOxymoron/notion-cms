@@ -43,7 +43,7 @@ export default async function TwitchAuth({
         <FakeProfile seed={user_id + "_4"} />
       </div>
       {!isSubscribed && (
-        <p className="text-red-500">
+        <p className="text-red-600">
           <span className="scale-125 inline-block mx-2">❌</span>Du bist leider kein Subscriber von{" "}
           {process.env.TWITCH_CHANNEL_NAME}, die Seite ist nur für Subscriber zugänglich.
         </p>
@@ -54,7 +54,7 @@ export default async function TwitchAuth({
         ) : (
           <Link
             href={`https://twitch.tv/` + process.env.TWITCH_CHANNEL_NAME + "/subscribe"}
-            className="hover:text-blue-500 px-4 py-2 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors"
+            className="hover:text-red-600 px-4 py-2 bg-red-600 hover:bg-transparent border border-red-600 rounded-md transition-colors"
           >
             Subscriber werden
           </Link>
