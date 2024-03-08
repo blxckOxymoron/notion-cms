@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { MouseEventHandler, useCallback, useEffect, useRef } from "react";
+import xIcon from "./x.svg";
+import Image from "next/image";
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -31,10 +33,17 @@ export default function Modal({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-md w-screen h-screen flex justify-center overflow-auto z-10 p-4"
+      className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-md w-screen h-screen flex flex-col items-center overflow-auto z-10 p-4"
       ref={outermostElement}
       onClick={handleClick}
     >
+      <button
+        onClick={() => router.back()}
+        className="p-2 mr-2 leading-snug rounded-full self-end border border-white hover:bg-white/30 transition-colors"
+      >
+        <Image src={xIcon} alt="close" />
+      </button>
+
       {children}
     </div>
   );

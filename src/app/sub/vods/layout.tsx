@@ -10,7 +10,7 @@ export default function VODLayout({ children }: { children: React.ReactNode }) {
       <header className="flex gap-2 justify-center">
         <a
           href={Routes.vods.all}
-          className="p-2 leading-snug rounded-full border border-white hover:bg-zinc-600 transition-colors"
+          className="p-2 leading-snug rounded-full border border-white hover:bg-white/30 transition-colors"
         >
           <Image src={homeIcon} alt="Home Icon" />
         </a>
@@ -28,7 +28,7 @@ export default function VODLayout({ children }: { children: React.ReactNode }) {
         </form>
         <a
           href={Routes.auth.info}
-          className="p-2 leading-snug rounded-full border border-white hover:bg-zinc-600 transition-colors"
+          className="p-2 leading-snug rounded-full border border-white hover:bg-white/30 transition-colors"
         >
           <Image src={twitchIcon} alt="Twitch Icon" />
         </a>
