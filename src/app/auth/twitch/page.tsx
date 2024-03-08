@@ -19,14 +19,14 @@ export default async function TwitchAuth({
   const isSubscribed = await getIsSubscribed(user_id);
 
   return (
-    <main className="flex flex-col gap-8 p-12 h-screen items-center justify-center">
+    <main className="flex flex-col gap-8 p-12 h-screen items-center justify-center overflow-x-hidden">
       <h1 className="text-4xl font-semibold">Who&apos;s watching?</h1>
-      <div className="flex gap-10 pb-12 select-none">
+      <div className="flex gap-10 pb-12 select-none max-w-full justify-center">
         <FakeProfile seed={user_id + "_1"} />
         <FakeProfile seed={user_id + "_2"} />
         <a
           href={isSubscribed ? Routes.vods.all : "#"}
-          className="w-52 h-52 hover:border-white border-2 border-transparent rounded-md hover:scale-110 transition-all cursor-pointer group relative"
+          className="w-52 h-52 hover:border-white border-2 border-transparent rounded-md hover:scale-110 transition-all cursor-pointer group relative shrink-0"
         >
           <Image
             src={profile_image_url}
@@ -80,7 +80,7 @@ function FakeProfile({ seed }: { seed: string }) {
 
   return (
     <div
-      className="w-52 h-52 overflow-hidden border-2 border-transparent"
+      className="w-52 h-52 overflow-hidden border-2 border-transparent shrink-0"
       dangerouslySetInnerHTML={{ __html: avatar.toString() }}
     ></div>
   );

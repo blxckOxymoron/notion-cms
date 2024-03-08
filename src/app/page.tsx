@@ -7,7 +7,7 @@ export default async function Home() {
       className="flex min-h-screen items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url(${backgorundImage.src})` }}
     >
-      <div className="flex flex-col items-start p-12 gap-4 bg-black/70 rounded-xl max-w-lg">
+      <div className="flex flex-col items-start p-12 gap-4 bg-black/70 rounded-xl max-w-lg m-2">
         <h1 className="text-5xl font-bold">{process.env.TWITCH_CHANNEL_NAME}&rsquo;s VODs</h1>
         <p className="text-lg">
           Hier hast du die Möglichkeit, dir als Subscriber die VODs anzuschauen.
