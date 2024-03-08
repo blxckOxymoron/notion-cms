@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dicebear/collection": "^7.1.1",
+    "@dicebear/core": "^7.1.1",
     "@notionhq/client": "^2.2.14",
     "disqus-react": "^1.1.5",
     "next": "^14.1.0",

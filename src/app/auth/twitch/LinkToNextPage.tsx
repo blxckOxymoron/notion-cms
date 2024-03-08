@@ -7,12 +7,14 @@ export default function LinkToNextPage() {
   const to = useSearchParams().get("to");
   const actualTo = to === "null" ? null : to;
 
+  if (!actualTo) return null;
+
   return (
     <Link
-      href={actualTo ?? "/sub/vods"}
-      className="hover:text-blue-500 px-3 py-1 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors"
+      href={actualTo}
+      className="hover:text-blue-500 px-4 py-2 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors"
     >
-      {actualTo ? "weiter" : "vods anschauen"}
+      weiter
     </Link>
   );
 }
