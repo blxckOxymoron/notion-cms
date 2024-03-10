@@ -31,7 +31,7 @@ export default function VideoEmbed({
   return (
     <div className="flex flex-col gap-2 max-w-screen-lg w-full">
       <h2 className="text-4xl font-bold p-4 bg-black rounded-lg">{title}</h2>
-      <div className="flex gap-2 p-4 bg-black rounded-lg">
+      <div className="flex gap-2 p-4 bg-black rounded-lg overflow-x-scroll">
         <p>Hoster:</p>
         {urls
           .filter(v => v.url)
