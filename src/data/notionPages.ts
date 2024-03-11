@@ -20,6 +20,12 @@ export async function getNotionPages({
     start_cursor: start_cursor ? start_cursor : undefined,
     database_id: process.env.NOTION_DATABASE_ID,
     page_size: 24,
+    sorts: [
+      {
+        property: "index",
+        direction: "ascending",
+      },
+    ],
     filter: query
       ? {
           property: "name",
