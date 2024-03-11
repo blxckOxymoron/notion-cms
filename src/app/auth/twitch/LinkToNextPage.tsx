@@ -11,8 +11,8 @@ export default function LinkToNextPage() {
 
   return (
     <Link
-      href={actualTo}
-      className="hover:text-red-600 px-4 py-2 bg-red-600 hover:bg-transparent border border-red-600 rounded-md transition-colors"
+      href={actualTo ?? "/sub/vods"}
+      className="hover:text-primary px-3 py-1 bg-primary hover:bg-transparent border border-primary rounded-md transition-colors"
     >
       weiter
     </Link>

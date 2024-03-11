@@ -42,20 +42,12 @@ export default function PageVideos({
     <>
       <div className="flex flex-wrap justify-center gap-4">
         {pages.results.map(page => {
-          const props: any = page.properties;
-          return (
-            <VODWindow
-              key={page.id}
-              id={page.id}
-              thumbnailUrl={props.thumbnail_url.url}
-              title={props.name.title.reduce((a: string, e: any) => a + e.plain_text, "")}
-            />
-          );
+          return <VODWindow key={page.id} vod={page} />;
         })}
       </div>
       {pages.has_more && (
         <button
-          className="hover:text-red-600 px-3 py-1 bg-red-600 hover:bg-transparent border border-red-600 rounded-md transition-colors self-center"
+          className="hover:text-primary px-3 py-1 bg-primary hover:bg-transparent border border-primary rounded-md transition-colors self-center"
           onClick={() => loadMore(pages.next_cursor)}
         >
           mehr laden

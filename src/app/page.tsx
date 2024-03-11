@@ -14,7 +14,7 @@ export default async function Home() {
         </p>
         <Link
           href="/sub"
-          className="hover:text-red-600 px-3 py-4 bg-red-600 hover:bg-black/70 border border-red-600 rounded-md transition-colors self-stretch text-lg font-semibold text-center"
+          className="hover:text-primary px-3 py-4 bg-primary hover:bg-black/70 border border-primary rounded-md transition-colors self-stretch text-lg font-semibold text-center"
         >
           Zum Subscriber Content
         </Link>
