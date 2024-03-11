@@ -1,6 +1,6 @@
 "use client";
 
-import extractEmbedURLs from "@/lib/extractEmbedURLs";
+import { VodInfo } from "@/lib/notionPageToVodInfo";
 import { DiscussionEmbed } from "disqus-react";
 import Link from "next/link";
 import type { IframeHTMLAttributes } from "react";
@@ -11,17 +11,11 @@ const allowProps: IframeHTMLAttributes<HTMLIFrameElement> = {
   allowFullScreen: true,
 };
 
-type URLs = ReturnType<typeof extractEmbedURLs>;
-
 export default function VideoEmbed({
-  urls,
-  title,
-  id,
-  hosting = urls[0]?.name,
+  vod,
+  hosting = vod.embedURLs[0]?.name,
 }: {
-  urls: URLs;
-  title: string;
-  id: string;
+  vod: VodInfo;
   hosting?: string;
 }) {
   if (!process.env.NEXT_PUBLIC_DISQUS_SHORTNAME) {
@@ -30,29 +24,27 @@ export default function VideoEmbed({
 
   return (
     <div className="flex flex-col gap-2 max-w-screen-lg w-full">
-      <h2 className="text-4xl font-bold p-4 bg-black rounded-lg">{title}</h2>
+      <h2 className="text-4xl font-bold p-4 bg-black rounded-lg">{vod.title}</h2>
       <div className="flex gap-2 p-4 bg-black rounded-lg overflow-x-scroll">
         <p>Hoster:</p>
-        {urls
-          .filter(v => v.url)
-          .map(v => (
-            <Link
-              href={`?hosting=${v.name}`}
-              key={v.name}
-              replace
-              className="hover:underline aria-selected:underline"
-              aria-selected={v.name === hosting}
-            >
-              {v.name}
-            </Link>
-          ))}
+        {vod.embedURLs.map(v => (
+          <Link
+            href={`?hosting=${v.name}`}
+            key={v.name}
+            replace
+            className="hover:underline aria-selected:underline"
+            aria-selected={v.name === hosting}
+          >
+            {v.name}
+          </Link>
+        ))}
       </div>
       <div className="shrink-0" style={{ aspectRatio: `16/9` }}>
         <iframe
           width="1080"
           height="607"
           className="w-full h-full"
-          src={urls.find(v => v.name === hosting)?.url}
+          src={vod.embedURLs.find(v => v.name === hosting)?.url}
           {...allowProps}
         ></iframe>
       </div>
@@ -60,7 +52,7 @@ export default function VideoEmbed({
         <DiscussionEmbed
           shortname={process.env.NEXT_PUBLIC_DISQUS_SHORTNAME}
           config={{
-            identifier: id,
+            identifier: vod.id,
           }}
         />
       </div>

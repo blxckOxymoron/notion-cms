@@ -1,5 +1,6 @@
 "use server";
 
+import notionPageToVodInfo from "@/lib/notionPageToVodInfo";
 import { Client, isFullPage } from "@notionhq/client";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -43,7 +44,7 @@ export async function getNotionPages({
   return {
     has_more,
     next_cursor,
-    results: pages,
+    results: pages.map(notionPageToVodInfo),
   };
 }
 
@@ -54,5 +55,5 @@ export async function getNotionPage(id: string) {
     page_id: id,
   });
 
-  return isFullPage(page) ? page : null;
+  return isFullPage(page) ? notionPageToVodInfo(page) : null;
 }

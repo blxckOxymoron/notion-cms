@@ -2,7 +2,6 @@ import VideoEmbed from "@/components/VideoEmbed";
 import Modal from "@/components/Modal";
 import { getNotionPage } from "@/data/notionPages";
 import { notFound } from "next/navigation";
-import extractEmbedURLs from "@/lib/extractEmbedURLs";
 
 export default async function VODVideoPage({
   params,
@@ -14,21 +13,9 @@ export default async function VODVideoPage({
   const page = await getNotionPage(params.vodId);
   if (!page) notFound();
 
-  const properties: any = page.properties;
-
-  const urls = extractEmbedURLs(page.properties);
-
   return (
     <Modal>
-      <VideoEmbed
-        urls={urls}
-        id={params.vodId}
-        hosting={searchParams.hosting}
-        title={properties.name.title.reduce(
-          (txt: string, { plain_text }: { plain_text: string }) => txt + plain_text,
-          ""
-        )}
-      />
+      <VideoEmbed vod={page} hosting={searchParams.hosting} />
     </Modal>
   );
 }
