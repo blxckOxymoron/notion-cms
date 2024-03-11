@@ -1,4 +1,5 @@
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import notionRichTextToString from "./notionRichTextToString";
 
 export type VodInfo = {
   id: string;
@@ -7,12 +8,13 @@ export type VodInfo = {
     url: string;
   }[];
   passwordProtected: boolean;
+  isCorrectPassword: boolean;
   index: number | null;
   title: string;
   thubnailURL: string;
 };
 
-export default function notionPageToVodInfo(page: PageObjectResponse): VodInfo {
+export default function notionPageToVodInfo(page: PageObjectResponse, password?: string): VodInfo {
   const properties = page.properties;
 
   const embedURLs = extractEmbedURLs(properties);
@@ -28,15 +30,17 @@ export default function notionPageToVodInfo(page: PageObjectResponse): VodInfo {
     throw "Invalid page object response from Notion API";
   }
 
+  const passwordProtected = properties.password.rich_text.length > 0;
+  const correctPassword = notionRichTextToString(properties.password.rich_text);
+  const isCorrectPassword = !passwordProtected || password === correctPassword;
+
   return {
     id: page.id,
-    embedURLs,
-    passwordProtected: properties.password.rich_text.length > 0,
+    embedURLs: isCorrectPassword ? embedURLs : [], // keep embedURLs empty if password is incorrect
+    passwordProtected,
+    isCorrectPassword,
     index: properties.index.number,
-    title: properties.name.title.reduce(
-      (txt: string, { plain_text }: { plain_text: string }) => txt + plain_text,
-      ""
-    ),
+    title: notionRichTextToString(properties.name.title),
     thubnailURL:
       properties.thumbnail_url.url ??
       "https://placehold.co/320x180/222/FDFDFD?font=montserrat&text=No+Preview",

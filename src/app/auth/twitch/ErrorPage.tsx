@@ -22,7 +22,7 @@ export default function ErrorPage({
         <div className="flex gap-2">
           <Link
             href="/auth/twitch/login"
-            className="border rounded-md px-3 py-1 hover:border-blue-500 hover:text-blue-500 transition-colors"
+            className="border rounded-md px-3 py-1 hover:border-primary hover:text-primary transition-colors"
           >
             login erneut versuchen
           </Link>

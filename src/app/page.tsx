@@ -9,7 +9,7 @@ export default async function Home() {
       <p>Hier hast du die möglichkeit als subscriber dir die VODs anzuschauen.</p>
       <Link
         href="/sub"
-        className="hover:text-blue-500 px-3 py-1 bg-blue-500 hover:bg-transparent border border-blue-500 rounded-md transition-colors"
+        className="hover:text-primary px-3 py-1 bg-primary hover:bg-transparent border border-primary rounded-md transition-colors"
       >
         Zum Subscriber Content
       </Link>

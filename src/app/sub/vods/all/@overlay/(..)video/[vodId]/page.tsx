@@ -8,9 +8,10 @@ export default async function VODVideoPage({
   searchParams,
 }: {
   params: { vodId: string };
-  searchParams: { hosting: string | undefined };
+  searchParams: { hosting: string | undefined; password: string | undefined };
 }) {
-  const page = await getNotionPage(params.vodId);
+  const page = await getNotionPage(params.vodId, searchParams.password);
+
   if (!page) notFound();
 
   return (

@@ -44,16 +44,20 @@ export async function getNotionPages({
   return {
     has_more,
     next_cursor,
-    results: pages.map(notionPageToVodInfo),
+    results: pages.map(page => notionPageToVodInfo(page)),
   };
 }
 
-export async function getNotionPage(id: string) {
+export async function getNotionPage(id: string, password?: string) {
   if (!process.env.NOTION_DATABASE_ID) throw new Error("Missing NOTION_DATABASE_ID");
 
   const page = await notion.pages.retrieve({
     page_id: id,
   });
 
-  return isFullPage(page) ? notionPageToVodInfo(page) : null;
+  if (!isFullPage(page)) return null;
+
+  const vod = notionPageToVodInfo(page, password);
+
+  return vod;
 }
