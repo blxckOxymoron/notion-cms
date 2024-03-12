@@ -7,7 +7,6 @@ import { type IframeHTMLAttributes } from "react";
 import Image from "next/image";
 import lockIcon from "./lock.svg";
 import { setSavedPassword } from "@/data/user";
-import VideoEmbedPasswordStatus from "./VideoEmbedPasswordStatus";
 
 const allowProps: IframeHTMLAttributes<HTMLIFrameElement> = {
   allow:
@@ -36,7 +35,9 @@ export default function VideoEmbed({
             Pass&shy;wort&shy;ge&shy;schützt&shy;es Video
           </h2>
           <form action={setSavedPassword.bind(null, vod.id)} className="flex flex-col gap-2">
-            <VideoEmbedPasswordStatus />
+            {vod.password.specified && (
+              <p className="text-red-500">Das eingegebene Passwort ist nicht korrekt.</p>
+            )}
             <label htmlFor="password">Passwort eingeben:</label>
             <div className="flex gap-2 flex-wrap">
               <input
