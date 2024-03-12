@@ -3,7 +3,11 @@
 import { VodInfo } from "@/lib/notionPageToVodInfo";
 import { DiscussionEmbed } from "disqus-react";
 import Link from "next/link";
-import { useEffect, type IframeHTMLAttributes } from "react";
+import { type IframeHTMLAttributes } from "react";
+import Image from "next/image";
+import lockIcon from "./lock.svg";
+import { setSavedPassword } from "@/data/user";
+import VideoEmbedPasswordStatus from "./VideoEmbedPasswordStatus";
 
 const allowProps: IframeHTMLAttributes<HTMLIFrameElement> = {
   allow:
@@ -22,23 +26,17 @@ export default function VideoEmbed({
     throw "Missing DISQUS_SHORTNAME env variable";
   }
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    if (url.searchParams.get("password") !== null) {
-      url.searchParams.delete("password");
-      window.history.replaceState({}, "", url.toString());
-    }
-  }, []);
-
   return (
     <div className="flex flex-col gap-2 max-w-screen-lg w-full">
       <h2 className="text-4xl font-bold p-4 bg-black rounded-lg">{vod.title}</h2>
-      {!vod.isCorrectPassword ? (
-        <div className="bg-black rounded-lg p-4 self-center flex flex-col gap-2 items-center max-w-full">
+      {!vod.password.correct ? (
+        <div className="bg-black rounded-lg p-4 self-center flex flex-col gap-2 items-center max-w-full py-8">
+          <Image src={lockIcon} alt="Lock Icon" width={48} height={48} />
           <h2 className="text-center text-4xl font-bold mb-4">
             Pass&shy;wort&shy;ge&shy;schützt&shy;es Video
           </h2>
-          <form action="" method="GET" className="flex flex-col gap-2">
+          <form action={setSavedPassword.bind(null, vod.id)} className="flex flex-col gap-2">
+            <VideoEmbedPasswordStatus />
             <label htmlFor="password">Passwort eingeben:</label>
             <div className="flex gap-2 flex-wrap">
               <input

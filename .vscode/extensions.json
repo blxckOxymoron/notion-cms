@@ -1,3 +1,7 @@
 {
-  "recommendations": ["bradlc.vscode-tailwindcss", "stivo.tailwind-fold"]
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "stivo.tailwind-fold",
+    "yoavbls.pretty-ts-errors"
+  ]
 }
