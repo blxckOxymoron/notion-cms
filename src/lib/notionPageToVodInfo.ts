@@ -1,5 +1,6 @@
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import notionRichTextToString from "./notionRichTextToString";
+import { getSavedPassword } from "@/data/user";
 
 export type VodInfo = {
   id: string;
@@ -7,14 +8,18 @@ export type VodInfo = {
     name: string;
     url: string;
   }[];
-  passwordProtected: boolean;
-  isCorrectPassword: boolean;
+  password: {
+    protected: boolean;
+    specified: boolean;
+    correct: boolean;
+  };
   index: number | null;
   title: string;
   thubnailURL: string;
 };
 
-export default function notionPageToVodInfo(page: PageObjectResponse, password?: string): VodInfo {
+export default async function notionPageToVodInfo(page: PageObjectResponse): Promise<VodInfo> {
+  const password = await getSavedPassword(page.id);
   const properties = page.properties;
 
   const embedURLs = extractEmbedURLs(properties);
@@ -37,8 +42,11 @@ export default function notionPageToVodInfo(page: PageObjectResponse, password?:
   return {
     id: page.id,
     embedURLs: isCorrectPassword ? embedURLs : [], // keep embedURLs empty if password is incorrect
-    passwordProtected,
-    isCorrectPassword,
+    password: {
+      protected: passwordProtected,
+      specified: !!password,
+      correct: isCorrectPassword,
+    },
     index: properties.index.number,
     title: notionRichTextToString(properties.name.title),
     thubnailURL:
